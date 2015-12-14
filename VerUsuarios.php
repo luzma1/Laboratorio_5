@@ -15,7 +15,7 @@
 
 <head><title> Mostrar Usuarios </title></head>
 
-<body>
+<body style="background-color: transparent">
         <div>	
 			<?php 
 			

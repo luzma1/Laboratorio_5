@@ -71,6 +71,29 @@
 					echo "Error: " . $acciones . "<br>" . $connection->error;
 				}
 				$connection->close();
+				
+				// Inserción de xml
+				// Cargamos el fichero
+				$xml = simplexml_load_file("preguntas.xml");
+				
+				//añadimos un hijo al XML, el assessmentItem
+				$preguntaXML = $xml->addChild('assessmentItem');
+				//Introducimos sus atributos
+				$preguntaXML->addAttribute('complexity', $_POST['complejidad']); 
+				$preguntaXML->addAttribute('subject', $tema); 
+				
+				//añadimos otro hijo, itemBody
+				$itemBody = $preguntaXML->addChild('itemBody');
+				//Introducimos sus atributos
+				$itemBody->addChild('p', $_POST['pregunta']);
+				
+				//añadimos otro hijo de preguntaXML itemBody
+				$correctResponse = $preguntaXML->addChild('correctResponse'); 
+				$correctResponse->addChild('value', $_POST['respuesta']);
+			
+				// Guardar el fichero XML
+				$xml->asXML('preguntas.xml');
+				
 				$message = "Pregunta insertada correctamente";
 				echo "<script type='text/javascript'>alert('$message');</script>";
 			}
